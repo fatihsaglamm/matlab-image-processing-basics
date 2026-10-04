@@ -1,8 +1,10 @@
 # MATLAB Image Processing Projects
 
-A collection of MATLAB projects focused on **digital image enhancement, restoration, filtering, edge detection, frequency-domain processing, and image reconstruction**.
+A collection of MATLAB projects covering **image enhancement, restoration, frequency-domain filtering, edge detection, segmentation, morphology, and object counting**.
 
-The repository demonstrates both spatial-domain and frequency-domain image processing techniques through practical experiments developed for the **CNG466 – Fundamentals of Image Processing** course.
+These projects were developed as part of the **CNG466 – Fundamentals of Image Processing** course at Middle East Technical University, Northern Cyprus Campus.
+
+The repository demonstrates a progression from basic spatial-domain operations to more advanced restoration and segmentation techniques.
 
 ## Projects
 
@@ -10,135 +12,89 @@ The repository demonstrates both spatial-domain and frequency-domain image proce
 
 The first assignment focuses on fundamental spatial-domain image processing techniques.
 
-#### Noise and Artifact Removal
+Topics include:
 
-A median filter is applied to remove unwanted image artifacts while preserving important visual structures.
-
-Techniques include:
-
-- Image histogram analysis
+- Histogram analysis
 - Median filtering
-- Spatial-domain enhancement
-- Image reconstruction
+- Mean filtering
+- Noise reduction
+- Sobel edge detection
+- Image merging
+- Grayscale conversion
+- Bicubic resizing
 
-#### Denoising and Edge Detection
+The tasks include removing unwanted image artifacts, denoising images while examining edge preservation, and combining multiple images. :chatgpt-content-reference{index="0"}
 
-A noisy image is processed using an averaging filter and analyzed before and after denoising.
+---
 
-The implementation includes:
+### Assignment 2 – Image Restoration and Reconstruction
 
-- `9 × 9` averaging filter
-- Horizontal Sobel operator
-- Vertical Sobel operator
-- Combined edge maps
-- Edge-preservation analysis
+The second assignment focuses on identifying and removing different types of image degradation in both the **spatial and frequency domains**. :chatgpt-content-reference{index="1"}
 
-#### Image Merging
+Implemented techniques include:
 
-Two grayscale images are combined into a single image.
+- 2D Fourier Transform
+- Frequency spectrum analysis
+- Ideal Notch Reject Filtering
+- Order-statistic filtering
+- Motion blur modeling
+- Disk blur modeling
+- Wiener deconvolution
+- Sobel edge comparison
 
-The project also includes a custom image-merging experiment using:
+The project investigates several noisy or blurred images and applies different restoration approaches depending on the detected degradation.
 
-- RGB-to-grayscale conversion
-- Bicubic interpolation
-- Image resizing
-- Pixel-wise image addition
-
-## Assignment 2 – Image Restoration and Reconstruction
-
-The second assignment extends the project into more advanced **spatial and frequency-domain restoration techniques**.
-
-The goal is to identify different types of image degradation and select suitable filters to recover the images while preserving edges and structural information. :chatgpt-content-reference{index="0"}
-
-### Periodic Noise Removal
-
-Periodic noise is analyzed using the Fourier transform.
-
-The processing pipeline includes:
+Example processing flow:
 
 ```text
-Image
-  ↓
-2D Fourier Transform
-  ↓
-Frequency Spectrum Analysis
-  ↓
-Ideal Notch Reject Filter
-  ↓
-Inverse Fourier Transform
-  ↓
+Input Image
+    ↓
+Noise / Blur Analysis
+    ↓
+Spatial or Frequency-Domain Processing
+    ↓
+Image Restoration
+    ↓
+Edge Comparison
+    ↓
 Recovered Image
 ```
 
-The implementation uses:
+For periodic noise, the implementation uses Fourier analysis and an ideal notch reject filter. :chatgpt-content-reference{index="2"}
 
-- `fft2`
-- `fftshift`
-- Frequency-spectrum visualization
-- Ideal notch reject filtering
-- `ifft2`
+For blurred images, Wiener deconvolution is used together with motion and disk point-spread functions. :chatgpt-content-reference{index="3"}
 
-The script identifies periodic noise and suppresses selected frequency components using a notch reject filter. :chatgpt-content-reference{index="1"}
+---
 
-### Additive Noise Filtering
+### Assignment 3 – Image Segmentation and Morphology
 
-A noisy image is investigated using spatial-domain statistics and histogram analysis.
+The third assignment focuses on **image segmentation and morphological image processing**.
 
-An order-statistic filter is then used to reduce the detected noise.
+The goal is to segment egg regions from breakfast plate images and estimate the number of eggs in the image. :chatgpt-content-reference{index="4"}
 
-The restored image is compared with the original using Sobel edge maps. :chatgpt-content-reference{index="2"}
+The implementation includes:
 
-### Motion Blur Restoration
+- Grayscale conversion
+- Otsu thresholding
+- Binary image segmentation
+- Morphological opening
+- Hole filling
+- Connected-component analysis
+- Size-based object filtering
+- Egg counting
 
-The project models motion blur using:
+The segmentation stage uses Otsu’s thresholding method. :chatgpt-content-reference{index="5"}
 
-```matlab
-fspecial('motion', 25, 55)
-```
-
-and performs restoration using **Wiener deconvolution**.
-
-The workflow includes:
-
-- Fourier-domain analysis
-- Motion blur modeling
-- Noise-to-signal ratio estimation
-- Wiener filtering
-- Edge comparison
-
-:chatgpt-content-reference{index="3"}
-
-### Disk Blur Restoration
-
-Another degraded image is modeled using a disk-shaped point spread function:
-
-```matlab
-fspecial('disk', 7)
-```
-
-Wiener deconvolution is then applied to reconstruct the image. :chatgpt-content-reference{index="4"}
-
-## Edge Analysis
-
-Sobel operators are used throughout the experiments to compare structural information before and after restoration.
-
-Horizontal operator:
+Morphological processing is then applied using operations such as:
 
 ```text
--1 -2 -1
- 0  0  0
- 1  2  1
+strel
+imopen
+imfill
+bwconncomp
 ```
 
-Vertical operator:
-
-```text
--1  0  1
--2  0  2
--1  0  1
-```
-
-The horizontal and vertical responses are combined to visualize the overall edge structure.
+Connected components are analyzed by size to estimate the final egg count. :chatgpt-content-reference{index="6"}
 
 ## Repository Structure
 
@@ -154,6 +110,9 @@ matlab-image-processing/
 ├── assignment-2-image-restoration/
 │   └── image_restoration.m
 │
+├── assignment-3-segmentation-morphology/
+│   └── egg_segmentation_counting.m
+│
 ├── README.md
 └── .gitignore
 ```
@@ -161,64 +120,80 @@ matlab-image-processing/
 ## Technologies
 
 - MATLAB
-- Digital Image Processing
 - Image Processing Toolbox
+- Digital Image Processing
 - Spatial Filtering
 - Frequency-Domain Processing
 - Fourier Transform
-- Wiener Deconvolution
-- Sobel Edge Detection
-- Histogram Analysis
-- Image Reconstruction
+- Morphological Processing
+- Image Segmentation
 
 ## Key Concepts
 
 This repository demonstrates:
 
-- Spatial-domain image enhancement
+- Image enhancement
 - Median filtering
 - Mean filtering
-- Order-statistic filtering
-- Noise analysis
-- Periodic noise removal
-- Fourier transforms
-- Frequency-spectrum analysis
-- Notch reject filters
-- Motion blur modeling
-- Point Spread Functions
-- Wiener filtering
-- Image deconvolution
+- Histogram analysis
 - Sobel edge detection
-- Bicubic interpolation
 - Image merging
-- Image reconstruction
+- Fourier-domain analysis
+- Notch reject filtering
+- Wiener deconvolution
+- Motion blur restoration
+- Image segmentation
+- Otsu thresholding
+- Morphological opening
+- Hole filling
+- Connected-component analysis
+- Object counting
+
+## Learning Progression
+
+```text
+Assignment 1
+Spatial-Domain Enhancement
+Filtering + Edge Detection
+        ↓
+Assignment 2
+Image Restoration
+FFT + Frequency-Domain Filtering
+        ↓
+Assignment 3
+Segmentation + Morphology
+Object Detection and Counting
+```
 
 ## Running the Projects
 
-Open MATLAB and navigate to the project directory.
+Open MATLAB and navigate to the desired assignment folder.
 
-For Assignment 1, run the desired script:
+Example:
 
 ```matlab
 Q1_noise_removal
-Q2_denoising_edge_detection
-Q3_image_merging
-Q4_custom_image_merging
 ```
 
-For Assignment 2:
+or:
 
 ```matlab
 image_restoration
 ```
 
-Some scripts expect input images with specific filenames.
+For Assignment 3:
+
+```matlab
+egg_segmentation_counting("Plate1.png")
+```
+
+Some scripts require input images with specific filenames.
 
 ## Notes
 
 Course-provided input images may not be included in the repository.
 
-Users should provide the required input images before running the corresponding scripts.
+Users should provide the required image files before running the corresponding scripts.
 
 ## Academic Context
 
